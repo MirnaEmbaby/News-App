@@ -1,7 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 
-Widget buildArticleItem(article) {
+Widget buildArticleItem(article, context) {
   return Container(
     margin: const EdgeInsets.all(8.0),
     child: Row(
@@ -11,7 +11,7 @@ Widget buildArticleItem(article) {
           height: 120.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            image:  DecorationImage(
+            image: DecorationImage(
               image: NetworkImage('${article['urlToImage']}'),
               fit: BoxFit.cover,
             ),
@@ -20,7 +20,7 @@ Widget buildArticleItem(article) {
         const SizedBox(
           width: 10.0,
         ),
-         Expanded(
+        Expanded(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -28,10 +28,7 @@ Widget buildArticleItem(article) {
             children: [
               Text(
                 '${article['title']}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -49,21 +46,21 @@ Widget buildArticleItem(article) {
   );
 }
 
-Widget articlesBuilder(list){
+Widget articlesBuilder(list) {
   return ConditionalBuilder(
     condition: list.isNotEmpty,
     builder: (context) => Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) => buildArticleItem(list[index]),
+        itemBuilder: (context, index) => buildArticleItem(list[index], context),
         separatorBuilder: (context, index) => const Divider(
           thickness: 0.5,
+          color: Colors.grey,
         ),
         itemCount: 10,
       ),
     ),
-    fallback: (context) =>
-    const Center(child: CircularProgressIndicator()),
+    fallback: (context) => const Center(child: CircularProgressIndicator()),
   );
 }

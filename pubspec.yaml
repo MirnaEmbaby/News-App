@@ -39,6 +39,7 @@ dependencies:
   flutter_bloc: ^8.1.4
   dio: ^5.4.0
   conditional_builder_null_safety: ^0.0.6
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

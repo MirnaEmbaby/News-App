@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/layout/cubit/cubit.dart';
 import 'package:news_app/layout/cubit/states.dart';
+import 'package:news_app/shared/cubit/cubit.dart';
 
 class LayoutScreen extends StatelessWidget {
   const LayoutScreen({super.key});
@@ -9,7 +10,10 @@ class LayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NewsCubit()..getBusinessNews()..getSportsNews()..getScienceNews(),
+      create: (context) => NewsCubit()
+        ..getBusinessNews()
+        ..getSportsNews()
+        ..getScienceNews(),
       child: BlocConsumer<NewsCubit, NewsStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -22,6 +26,14 @@ class LayoutScreen extends StatelessWidget {
                   onPressed: () {},
                   icon: const Icon(
                     Icons.search,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    AppCubit.get(context).changeAppMode();
+                  },
+                  icon: const Icon(
+                    Icons.brightness_6_outlined,
                   ),
                 ),
               ],

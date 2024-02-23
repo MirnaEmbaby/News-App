@@ -46,7 +46,7 @@ Widget buildArticleItem(article, context) {
   );
 }
 
-Widget articlesBuilder(list) {
+Widget articlesBuilder(list, context) {
   return ConditionalBuilder(
     condition: list.isNotEmpty,
     builder: (context) => Padding(
@@ -63,4 +63,55 @@ Widget articlesBuilder(list) {
     ),
     fallback: (context) => const Center(child: CircularProgressIndicator()),
   );
+}
+
+Widget? defaultFormField({
+  required TextEditingController controller,
+  required TextInputType type,
+  Function? onSubmit,
+  Function? onChanged,
+  Function? onTap,
+  bool isPassword = false,
+  required Function validate,
+  required String label,
+  required IconData prefix,
+  required bool hasSuffix,
+  IconData? suffix,
+  Function? suffixPressed,
+  bool isClickable = true,
+}) =>
+    TextFormField(
+      controller: controller,
+      keyboardType: type,
+      obscureText: isPassword,
+      enabled: isClickable,
+      onFieldSubmitted: (s) => onSubmit!(s),
+      onChanged: (s) => onChanged!(s),
+      onTap: () => onTap!(),
+      validator: (s) => validate(s),
+      decoration: InputDecoration(
+        labelText: label,
+        icon: hasSuffix ? Icon(suffix) : null,
+        prefixIcon: Icon(prefix),
+        suffixIcon: suffix != null
+            ? IconButton(
+                onPressed: () => suffixPressed!(),
+                icon: Icon(
+                  suffix,
+                ),
+              )
+            : null,
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.pink,
+            width: 2.0,
+          ),
+        ),
+        border: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey)),
+      ),
+    );
+
+void navigateTo(context, widget) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
 }

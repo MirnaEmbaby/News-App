@@ -33,3 +33,13 @@ class NewsGetSportsErrorState extends NewsStates {
 
   NewsGetSportsErrorState(this.error);
 }
+
+class NewsSearchLoadingState extends NewsStates {}
+
+class NewsSearchSuccessState extends NewsStates {}
+
+class NewsSearchErrorState extends NewsStates {
+  final String error;
+
+  NewsSearchErrorState(this.error);
+}

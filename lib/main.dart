@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/layout/cubit/cubit.dart';
 import 'package:news_app/layout/layout_screen.dart';
 import 'package:news_app/shared/bloc_observer.dart';
 import 'package:news_app/shared/cubit/cubit.dart';
@@ -19,24 +19,34 @@ void main() async {
 
   bool? isDark = CacheHelper.getBoolean(key: 'isDark');
 
-  runApp( MyApp( isDark: isDark,));
+  runApp(MyApp(
+    isDark: isDark,
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final bool? isDark;
+
   const MyApp({super.key, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AppCubit()..changeAppMode(fromShared: isDark),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => NewsCubit()
+              ..getBusinessNews()
+              ..getSportsNews()
+              ..getScienceNews()),
+        BlocProvider(
+            create: (context) => AppCubit()..changeAppMode(fromShared: isDark))
+      ],
       child: BlocConsumer<AppCubit, AppStates>(
-        listener: (context, state){},
-        builder: (context, state){
+        listener: (context, state) {},
+        builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-
               colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink),
               appBarTheme: const AppBarTheme(
                 titleSpacing: 20.0,
@@ -115,7 +125,8 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            themeMode: AppCubit.get(context).isDark? ThemeMode.dark : ThemeMode.light,
+            themeMode:
+                AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             home: const LayoutScreen(),
           );
         },

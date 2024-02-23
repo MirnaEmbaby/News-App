@@ -43,6 +43,7 @@ class SearchScreen extends StatelessWidget {
                 child: articlesBuilder(
                   list,
                   context,
+                  isSearching: true,
                 ),
               )
             ],

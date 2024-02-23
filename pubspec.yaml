@@ -40,6 +40,7 @@ dependencies:
   dio: ^5.4.0
   conditional_builder_null_safety: ^0.0.6
   shared_preferences: ^2.2.2
+  webview_flutter: ^4.7.0
 
 dev_dependencies:
   flutter_test:

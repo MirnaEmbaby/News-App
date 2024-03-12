@@ -17,7 +17,10 @@ Widget buildArticleItem(article, context) {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
               image: DecorationImage(
-                image: NetworkImage('${article['urlToImage']}'),
+                image: article['urlToImage'] != null
+                    ? NetworkImage('${article['urlToImage']}')
+                    : const NetworkImage(
+                        'https://media.istockphoto.com/id/1397345519/photo/friendly-alien-making-a-heart-hand-gesture.webp?b=1&s=170667a&w=0&k=20&c=nM7daCh9Zu5QFGS-5GT3_KTjFtfE3Cq7-QLVmLAWmT4='),
                 fit: BoxFit.cover,
               ),
             ),
@@ -31,11 +34,13 @@ Widget buildArticleItem(article, context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '${article['title']}',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
+                Builder(
+                  builder: (context) => Text(
+                    '${article['title']}',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 Text(
                   '${article['publishedAt']}',
